@@ -23,6 +23,9 @@ import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+import { AgreementFindManyArgs } from "../../agreement/base/AgreementFindManyArgs";
+import { Agreement } from "../../agreement/base/Agreement";
+import { AgreementWhereUniqueInput } from "../../agreement/base/AgreementWhereUniqueInput";
 
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
@@ -151,5 +154,85 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/agreements")
+  @ApiNestedQuery(AgreementFindManyArgs)
+  async findManyAgreements(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Agreement[]> {
+    const query = plainToClass(AgreementFindManyArgs, request.query);
+    const results = await this.service.findAgreements(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/agreements")
+  async connectAgreements(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: AgreementWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      agreements: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/agreements")
+  async updateAgreements(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: AgreementWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      agreements: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/agreements")
+  async disconnectAgreements(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: AgreementWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      agreements: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

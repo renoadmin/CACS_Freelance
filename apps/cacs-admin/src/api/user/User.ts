@@ -1,23 +1,12 @@
-import { Bid } from "../bid/Bid";
-import { Job } from "../job/Job";
-import { Message } from "../message/Message";
-import { Review } from "../review/Review";
-import { Transaction } from "../transaction/Transaction";
+import { JsonValue } from "type-fest";
 
 export type User = {
-  bids?: Array<Bid>;
-  bio: string | null;
   createdAt: Date;
-  email: string;
+  firstName: string | null;
   id: string;
-  jobs?: Array<Job>;
+  lastName: string | null;
   location: string | null;
-  profileImage: string | null;
-  receivedMessages?: Array<Message>;
-  reviewsAsClient?: Array<Review>;
-  reviewsAsFreelancer?: Array<Review>;
-  role?: "CLIENT" | "FREELANCER";
-  sentMessages?: Array<Message>;
-  transactionsAsClient?: Array<Transaction>;
-  transactionsAsFreelancer?: Array<Transaction>;
+  roles: JsonValue;
+  updatedAt: Date;
+  username: string;
 };

@@ -11,28 +11,23 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { BidCreateNestedManyWithoutUsersInput } from "./BidCreateNestedManyWithoutUsersInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
-import { JobCreateNestedManyWithoutUsersInput } from "./JobCreateNestedManyWithoutUsersInput";
-import { MessageCreateNestedManyWithoutUsersInput } from "./MessageCreateNestedManyWithoutUsersInput";
-import { ReviewCreateNestedManyWithoutUsersInput } from "./ReviewCreateNestedManyWithoutUsersInput";
-import { EnumUserRole } from "./EnumUserRole";
-import { TransactionCreateNestedManyWithoutUsersInput } from "./TransactionCreateNestedManyWithoutUsersInput";
+import { IsString, IsOptional } from "class-validator";
+import { IsJSONValue } from "@app/custom-validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserCreateInput {
   @ApiProperty({
     required: false,
-    type: () => BidCreateNestedManyWithoutUsersInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => BidCreateNestedManyWithoutUsersInput)
+  @IsString()
   @IsOptional()
-  @Field(() => BidCreateNestedManyWithoutUsersInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  bids?: BidCreateNestedManyWithoutUsersInput;
+  firstName?: string | null;
 
   @ApiProperty({
     required: false,
@@ -43,27 +38,7 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  bio?: string | null;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  email!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => JobCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => JobCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => JobCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  jobs?: JobCreateNestedManyWithoutUsersInput;
+  lastName?: string | null;
 
   @ApiProperty({
     required: false,
@@ -77,95 +52,27 @@ class UserCreateInput {
   location?: string | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  profileImage?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => MessageCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => MessageCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => MessageCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  receivedMessages?: MessageCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => ReviewCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => ReviewCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => ReviewCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  reviewsAsClient?: ReviewCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => ReviewCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => ReviewCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => ReviewCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  reviewsAsFreelancer?: ReviewCreateNestedManyWithoutUsersInput;
+  @Field(() => String)
+  password!: string;
 
   @ApiProperty({
     required: true,
-    enum: EnumUserRole,
   })
-  @IsEnum(EnumUserRole)
-  @Field(() => EnumUserRole)
-  role!: "CLIENT" | "FREELANCER";
+  @IsJSONValue()
+  @Field(() => GraphQLJSON)
+  roles!: InputJsonValue;
 
   @ApiProperty({
-    required: false,
-    type: () => MessageCreateNestedManyWithoutUsersInput,
+    required: true,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => MessageCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => MessageCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  sentMessages?: MessageCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TransactionCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TransactionCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TransactionCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  transactionsAsClient?: TransactionCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TransactionCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TransactionCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TransactionCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  transactionsAsFreelancer?: TransactionCreateNestedManyWithoutUsersInput;
+  @IsString()
+  @Field(() => String)
+  username!: string;
 }
 
 export { UserCreateInput as UserCreateInput };

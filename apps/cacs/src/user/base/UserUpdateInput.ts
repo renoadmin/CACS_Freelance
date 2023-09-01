@@ -11,28 +11,23 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { BidUpdateManyWithoutUsersInput } from "./BidUpdateManyWithoutUsersInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
-import { JobUpdateManyWithoutUsersInput } from "./JobUpdateManyWithoutUsersInput";
-import { MessageUpdateManyWithoutUsersInput } from "./MessageUpdateManyWithoutUsersInput";
-import { ReviewUpdateManyWithoutUsersInput } from "./ReviewUpdateManyWithoutUsersInput";
-import { EnumUserRole } from "./EnumUserRole";
-import { TransactionUpdateManyWithoutUsersInput } from "./TransactionUpdateManyWithoutUsersInput";
+import { IsString, IsOptional } from "class-validator";
+import { IsJSONValue } from "@app/custom-validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => BidUpdateManyWithoutUsersInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => BidUpdateManyWithoutUsersInput)
+  @IsString()
   @IsOptional()
-  @Field(() => BidUpdateManyWithoutUsersInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  bids?: BidUpdateManyWithoutUsersInput;
+  firstName?: string | null;
 
   @ApiProperty({
     required: false,
@@ -43,30 +38,7 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  bio?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  email?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => JobUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => JobUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => JobUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  jobs?: JobUpdateManyWithoutUsersInput;
+  lastName?: string | null;
 
   @ApiProperty({
     required: false,
@@ -88,90 +60,28 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  profileImage?: string | null;
+  password?: string;
 
   @ApiProperty({
     required: false,
-    type: () => MessageUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => MessageUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => MessageUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  receivedMessages?: MessageUpdateManyWithoutUsersInput;
+  roles?: InputJsonValue;
 
   @ApiProperty({
     required: false,
-    type: () => ReviewUpdateManyWithoutUsersInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => ReviewUpdateManyWithoutUsersInput)
+  @IsString()
   @IsOptional()
-  @Field(() => ReviewUpdateManyWithoutUsersInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  reviewsAsClient?: ReviewUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => ReviewUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => ReviewUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => ReviewUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  reviewsAsFreelancer?: ReviewUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    enum: EnumUserRole,
-  })
-  @IsEnum(EnumUserRole)
-  @IsOptional()
-  @Field(() => EnumUserRole, {
-    nullable: true,
-  })
-  role?: "CLIENT" | "FREELANCER";
-
-  @ApiProperty({
-    required: false,
-    type: () => MessageUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => MessageUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => MessageUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  sentMessages?: MessageUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TransactionUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TransactionUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TransactionUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  transactionsAsClient?: TransactionUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => TransactionUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TransactionUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TransactionUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  transactionsAsFreelancer?: TransactionUpdateManyWithoutUsersInput;
+  username?: string;
 }
 
 export { UserUpdateInput as UserUpdateInput };

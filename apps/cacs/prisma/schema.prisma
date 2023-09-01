@@ -8,13 +8,22 @@ generator client {
 }
 
 model User {
+  agreements Agreement[]
+  createdAt  DateTime    @default(now())
+  firstName  String?
+  id         String      @id @default(uuid())
+  lastName   String?
+  location   String?
+  password   String
+  roles      Json
+  updatedAt  DateTime    @updatedAt
+  username   String      @unique
+}
+
+model Agreement {
   createdAt DateTime @default(now())
-  firstName String?
-  id        String   @id @default(uuid())
-  lastName  String?
-  location  String?
-  password  String
-  roles     Json
+  id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
-  username  String   @unique
+  user      User?    @relation(fields: [userid], references: [id])
+  userid    String?
 }

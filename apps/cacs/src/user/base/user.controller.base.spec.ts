@@ -19,38 +19,46 @@ import { UserService } from "../user.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
-  bio: "exampleBio",
   createdAt: new Date(),
-  email: "exampleEmail",
+  firstName: "exampleFirstName",
   id: "exampleId",
+  lastName: "exampleLastName",
   location: "exampleLocation",
-  profileImage: "exampleProfileImage",
+  password: "examplePassword",
+  updatedAt: new Date(),
+  username: "exampleUsername",
 };
 const CREATE_RESULT = {
-  bio: "exampleBio",
   createdAt: new Date(),
-  email: "exampleEmail",
+  firstName: "exampleFirstName",
   id: "exampleId",
+  lastName: "exampleLastName",
   location: "exampleLocation",
-  profileImage: "exampleProfileImage",
+  password: "examplePassword",
+  updatedAt: new Date(),
+  username: "exampleUsername",
 };
 const FIND_MANY_RESULT = [
   {
-    bio: "exampleBio",
     createdAt: new Date(),
-    email: "exampleEmail",
+    firstName: "exampleFirstName",
     id: "exampleId",
+    lastName: "exampleLastName",
     location: "exampleLocation",
-    profileImage: "exampleProfileImage",
+    password: "examplePassword",
+    updatedAt: new Date(),
+    username: "exampleUsername",
   },
 ];
 const FIND_ONE_RESULT = {
-  bio: "exampleBio",
   createdAt: new Date(),
-  email: "exampleEmail",
+  firstName: "exampleFirstName",
   id: "exampleId",
+  lastName: "exampleLastName",
   location: "exampleLocation",
-  profileImage: "exampleProfileImage",
+  password: "examplePassword",
+  updatedAt: new Date(),
+  username: "exampleUsername",
 };
 
 const service = {
@@ -136,6 +144,7 @@ describe("User", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
   });
 
@@ -147,6 +156,7 @@ describe("User", () => {
         {
           ...FIND_MANY_RESULT[0],
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
+          updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
       ]);
   });
@@ -169,6 +179,7 @@ describe("User", () => {
       .expect({
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
+        updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
   });
 
@@ -181,6 +192,7 @@ describe("User", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       })
       .then(function () {
         agent

@@ -1,21 +1,10 @@
-import { BidUpdateManyWithoutUsersInput } from "./BidUpdateManyWithoutUsersInput";
-import { JobUpdateManyWithoutUsersInput } from "./JobUpdateManyWithoutUsersInput";
-import { MessageUpdateManyWithoutUsersInput } from "./MessageUpdateManyWithoutUsersInput";
-import { ReviewUpdateManyWithoutUsersInput } from "./ReviewUpdateManyWithoutUsersInput";
-import { TransactionUpdateManyWithoutUsersInput } from "./TransactionUpdateManyWithoutUsersInput";
+import { InputJsonValue } from "../../types";
 
 export type UserUpdateInput = {
-  bids?: BidUpdateManyWithoutUsersInput;
-  bio?: string | null;
-  email?: string;
-  jobs?: JobUpdateManyWithoutUsersInput;
+  firstName?: string | null;
+  lastName?: string | null;
   location?: string | null;
-  profileImage?: string | null;
-  receivedMessages?: MessageUpdateManyWithoutUsersInput;
-  reviewsAsClient?: ReviewUpdateManyWithoutUsersInput;
-  reviewsAsFreelancer?: ReviewUpdateManyWithoutUsersInput;
-  role?: "CLIENT" | "FREELANCER";
-  sentMessages?: MessageUpdateManyWithoutUsersInput;
-  transactionsAsClient?: TransactionUpdateManyWithoutUsersInput;
-  transactionsAsFreelancer?: TransactionUpdateManyWithoutUsersInput;
+  password?: string;
+  roles?: InputJsonValue;
+  username?: string;
 };
